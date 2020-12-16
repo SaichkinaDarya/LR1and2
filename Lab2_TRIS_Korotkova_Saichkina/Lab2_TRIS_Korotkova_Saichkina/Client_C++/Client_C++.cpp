@@ -79,7 +79,7 @@ void Client() {
 
         switch (choice) {
         case 1: {
-            int ClientID;
+            int ClientID=A_ALL;
             cout << "1. Only for one client\n2. For All Clients\n";
             int choice2;
             cin >> choice2;
@@ -87,9 +87,7 @@ void Client() {
                 cout << "Enter ID of client\n";
                 cin >> ClientID;
             }
-            if (choice2 == 2) {
-                ClientID = A_ALL;
-            }
+            
 
             cout << "Enter your Message\n";
             string str;

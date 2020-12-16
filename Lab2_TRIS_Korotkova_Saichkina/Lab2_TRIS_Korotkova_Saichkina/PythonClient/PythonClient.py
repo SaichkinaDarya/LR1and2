@@ -62,8 +62,10 @@ def Receive(Socket):
     return res
 def connect(Socket):
     Socket.connect((HOST, PORT))
+
 def disconnect(Socket):
     Socket.close()
+
 def GetData(ID):
     while True:
         clientSock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -83,12 +85,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     if (msg.ReceiveData(s)==MessageTypes.M_CONFIRM):
         MyID=msg.m_Header.m_To
         print('Connected, My ID is '+str(MyID))
-        t=Thread(target=GetData, args=(MyID,))
-        t.start()
+        t=Thread(target=GetData, args=(MyID,), daemon=True)
+        t.start()      
         disconnect(s)
     else:
         print('Error')
-        sys.exit(0)
+        sys.exit()
 while True:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         choice=int(input('1. Send Message\n2. Exit\n'))
@@ -114,6 +116,7 @@ while True:
            sys.exit(0)
         else:
             print('Please, press 1 or 2')
+        sys.exit(0)
 
 
 

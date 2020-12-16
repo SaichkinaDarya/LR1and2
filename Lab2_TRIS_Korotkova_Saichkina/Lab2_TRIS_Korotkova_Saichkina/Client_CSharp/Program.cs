@@ -94,12 +94,15 @@ namespace Client_CSharp
                 byte[] b = new byte[4];
                 s.Receive(b, sizeof(int), SocketFlags.None);
                 m_Header.m_From = BitConverter.ToInt32(b, 0);
+
                 b = new byte[4];
                 s.Receive(b, sizeof(int), SocketFlags.None);
                 m_Header.m_To = BitConverter.ToInt32(b, 0);
+
                 b = new byte[4];
                 s.Receive(b, sizeof(int), SocketFlags.None);
                 m_Header.m_Type = (MessageTypes)BitConverter.ToInt32(b, 0);
+
                 b = new byte[4];
                 s.Receive(b, sizeof(int), SocketFlags.None);
                 m_Header.m_Size = BitConverter.ToInt32(b, 0);
@@ -215,7 +218,7 @@ namespace Client_CSharp
                     case 2:
                         {
                             connect(s, endPoint);
-                            SendMessage(s, 0, MyID, MessageTypes.M_EXIT);
+                            SendMessage(s, (int)Adresses.A_BROCKER, MyID, MessageTypes.M_EXIT);
                             if (m.Receive(s) == MessageTypes.M_CONFIRM)
                             {
                                 Console.WriteLine("succes");
@@ -224,7 +227,9 @@ namespace Client_CSharp
                             {
                                 Console.WriteLine("error");
                             }
+                            
                             disconnect(s);
+                            Environment.Exit(0);
                             break;
                         }
 

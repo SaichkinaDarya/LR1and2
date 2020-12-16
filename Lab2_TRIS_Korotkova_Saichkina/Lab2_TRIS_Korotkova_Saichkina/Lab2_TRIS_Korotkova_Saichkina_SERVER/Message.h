@@ -38,6 +38,8 @@ public:
 		m_Data = "";
 	}
 
+	
+
 	Message(int to, int from, int type = M_TEXT, const string& data = "") {
 		m_Header.m_From = from;
 		m_Header.m_To = to;

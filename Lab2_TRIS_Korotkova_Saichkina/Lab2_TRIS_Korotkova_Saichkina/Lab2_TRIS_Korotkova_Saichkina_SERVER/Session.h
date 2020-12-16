@@ -5,7 +5,7 @@ private:
 	int s_id;
 	queue<Message> messages;
 	CRITICAL_SECTION m_CS;
-	clock_t  time;
+	clock_t  time; //Последнее время активности клиента
 public:
 	int getId() {
 		return s_id;

@@ -17,16 +17,19 @@
 CWinApp theApp;
 
 int MaxID = 0;
-
 map<int, shared_ptr<Session>> Sessions;
 
 void TimeOut() {
     while (true)
     {
-        for (const auto& i: Sessions ) {
-            if (double(clock() - i.second->getTime()) > 10000) {
-                cout << "Client " << i.first << " has been disconnected" << endl;
-                Sessions.erase(i.first);
+        for (auto i = Sessions.begin(); i != Sessions.end();) {
+            if (Sessions.find(i->first) != Sessions.end()) {
+                if (double(clock() - i->second->getTime()) > 10000) {
+                    cout << "Client " << i->first << " has been disconnected" << endl;
+                    i = Sessions.erase(i);
+                }
+                else
+                    i++;
             }
         }
         Sleep(1000);
@@ -67,10 +70,8 @@ void ProcClient(SOCKET hSOCK) {
             }
             else if (m.getHeader().m_To == A_ALL) {
                 for (auto i : Sessions) {
-                    if (i.first != m.getHeader().m_From) 
+                    if(i.first!=m.getHeader().m_From)
                         i.second->Add(m);
-                    
-                    
                 }
                 
             }
